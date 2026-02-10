@@ -1,5 +1,6 @@
 """
-    config.py
+config.py
+
     Globals, inits, and objects for other subfiles of the test software.
 
     Author : Paul Farrell (Paulf@woodway.com)
@@ -12,7 +13,6 @@
 import time
 import serial
 import serial.tools.list_ports
-import json
 
 # serialConfig object
 global serCfg
