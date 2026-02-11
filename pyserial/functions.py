@@ -1,11 +1,11 @@
 """
 functions.py
 
-    Holds functions
+    Holds functions for serial terminal
 
-    Author : Paul Farrell (Paulf@woodway.com)
+    Author : Paul Farrell (@OMINOUS1) (Paulf@woodway.com)
 
-    LAST DEVELOPED FOR: Python 3.10.8
+    LAST DEVELOPED FOR: Python 3.14.2
 
 """
 # ~~~~ Imports ~~~~
@@ -14,7 +14,10 @@ import sys
 import time
 import config  # custom file for the serial configs to share global serial object.
 
-def manual_write():
+# ~~~ Functions ~~~
+
+# write function to send user input hex values over serial
+def write():
     try:
         # get hex input from user
         user_input = input("\n>>Enter a hex command (e.g, 0x1A or 1A): ").strip()
@@ -34,12 +37,12 @@ def manual_write():
         config.serCfg.write(hex_value)
         print(f"Sent: {user_input}")
 
-        # read response gets rid of 3s
+        # read response prints ascii and hex
         response = config.serCfg.readline()
         hex_response = response.hex()
         if response:
-            print(f"Received Val: {response}")
-            print(f"Received Hex: {hex_response}")
+            print(f"Received Val: {response}")      # ascii
+            print(f"Received Hex: {hex_response}")  # hex
         else:
             print("No response received")
 
@@ -49,3 +52,6 @@ def manual_write():
         config.serCfg.close()
         print("Exiting...")
         sys.exit(1)
+
+# read function to read serial input
+def read():

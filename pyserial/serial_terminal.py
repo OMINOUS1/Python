@@ -4,9 +4,9 @@
     Python script that communicates with an RS‑232 device connected via a
     USB‑to‑Serial adapter using PySerial.
 
-    Author : Paul Farrell (Paulf@woodway.com)
+    Author : Paul Farrell (@OMINOUS1) (Paulf@woodway.com)
 
-    LAST DEVELOPED FOR: Python 3.10.8
+    LAST DEVELOPED FOR: Python 3.14.2
 
 """
 
@@ -19,6 +19,7 @@ import functions
 
 isRunningSerialUsb = False
 
+# main running script
 def main():
     print("\nScanning for available serial ports...")
     ports = config.list_serial_ports()
@@ -60,11 +61,11 @@ def main():
                 isRunningSerialUsb = False
 
             elif user_test_choice == "2":
-                print("Pleaceholder")
+                functions.read()
 
             elif user_test_choice == "3":
                 while True:
-                    functions.manual_write()
+                    functions.write()
 
             else:
                 print("Unknown choice.")
