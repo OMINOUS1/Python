@@ -14,68 +14,78 @@ import sys
 import time
 import config  # custom file for the serial configs to share global serial object.
 
+is_writing = False
+is_reading = False
+
 # ~~~ Functions ~~~
 
 # write function to send user input hex values over serial
 def write():
-    try:
-        # get hex input from user
-        user_input = input("\n>>Enter a hex command (e.g, 0x1A or 1A): ").strip()
 
-        # remove '0x' if present
-        if user_input.lower().startswith("0x"):
-            user_input = user_input[2:]
+    is_writing = True
 
-        # adding bounds
-        if not all(c in "0123456789abcdefABCDEF" for c in user_input):
-            print("Invalid hex value. only 0-9 and A-F are allowed.")
-            config.serCfg.close()
-            sys.exit(1)
+    while is_writing:
+        try:
+            # get hex input from user
+            user_input = input("\n>>Enter a hex command (e.g, 0x1A or 1A): ").strip()
 
-        # convert hex string bytes
-        hex_value = bytes.fromhex(user_input)
-        config.serCfg.write(hex_value)
-        print(f"Sent: {user_input}")
+            # remove '0x' if present
+            if user_input.lower().startswith("0x"):
+                user_input = user_input[2:]
 
-        # read response prints ascii and hex
-        response = config.serCfg.readline()
-        hex_response = response.hex()
-        if response:
-            print(f"Received Val: {response}")      # ascii
-            print(f"Received Hex: {hex_response}")  # hex
-        else:
-            print("No response received")
+            # adding bounds
+            if not all(c in "0123456789abcdefABCDEF" for c in user_input):
+                print("Invalid hex value. only 0-9 and A-F are allowed.")
+                config.serCfg.close()
+                sys.exit(1)
 
-    except KeyboardInterrupt:
-        print("Operation cancelled by user.")
-        #print("Closing COM port...")
-        #config.serCfg.close()
-        #print("Exiting...")
-        #sys.exit(1)
+            # convert hex string bytes
+            hex_value = bytes.fromhex(user_input)
+            config.serCfg.write(hex_value)
+            print(f"Sent: {user_input}")
+
+            # read response prints ascii and hex
+            response = config.serCfg.readline()
+            hex_response = response.hex()
+            if response:
+                print(f"Received Val: {response}")      # ascii
+                print(f"Received Hex: {hex_response}")  # hex
+            else:
+                print("No response received")
+
+        except KeyboardInterrupt:
+            print("Operation cancelled by user.")
+            is_writing = False
+            #print("Closing COM port...")
+            #config.serCfg.close()
+            #print("Exiting...")
+            #sys.exit(1)
         
-    return
-
 # read function to read serial input
 def read():
 
-    print("\nReading from serial port...")
-    try:
-        while True:
-            if config.serCfg.in_waiting > 0:
+    is_reading = True
 
-                # read response prints ascii and hex
-                response = config.serCfg.readline()
-                hex_response = response.hex()
-                print(f"\nReceived Val: {response}")      # ascii
-                print(f"Received Hex: {hex_response}")  # hex
+    while is_reading:
+        print("\nReading from serial port...")
+        try:
+            while True:
+                if config.serCfg.in_waiting > 0:
 
-    except KeyboardInterrupt:
-        print ("\nStopped by user")
-        return
+                    # read response prints ascii and hex
+                    response = config.serCfg.readline()
+                    hex_response = response.hex()
+                    print(f"\nReceived Val: {response}")      # ascii
+                    print(f"Received Hex: {hex_response}")  # hex
 
-    finally:
-        print("Operation cancelled by user.")
-        #print("Closing COM port...")
-        #config.serCfg.close()
-        #print("Exiting...")
-        #sys.exit(1)
+        except KeyboardInterrupt:
+            print ("\nStopped by user")
+            is_writing = False
+            return
+
+        finally:
+            print("Operation cancelled by user.")
+            #print("Closing COM port...")
+            #config.serCfg.close()
+            #print("Exiting...")
+            #sys.exit(1)
