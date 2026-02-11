@@ -53,7 +53,7 @@ def main():
             print("\n\n-------------------------")
             print("|\tMain Menu\t|")
             print("-------------------------")
-            print("1. Exit\n2. Placeholder\n3. Manual Write")
+            print("1. Exit\n2. Read\n3. Manual Write")
 
             user_test_choice = input(">> ")
 
