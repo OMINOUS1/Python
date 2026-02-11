@@ -105,7 +105,7 @@ def multiport():
     #config.initSerial(comport_user_input,baudrate_user_input,timeout_user_input)
     #config.serCfg.open()
 
-    ser2 = serial.Serial(comport_user_input,baudrate_user_input,timeout_user_input)
+    ser2 = serial.Serial(comport_user_input,baudrate_user_input,timeout = timeout_user_input)
     ser2.open()
 
     print("\nReading from serial port...")
