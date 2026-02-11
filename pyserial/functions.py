@@ -55,3 +55,24 @@ def write():
 
 # read function to read serial input
 def read():
+
+    print("\nReading from serial port...")
+    try:
+        while True:
+            if config.serCfg.in_waiting > 0:
+
+                # read response prints ascii and hex
+                response = config.serCfg.readline()
+                hex_response = response.hex()
+                print(f"\nReceived Val: {response}")      # ascii
+                print(f"Received Hex: {hex_response}")  # hex
+
+    except KeyboardInterrupt:
+        print ("\nStopped by user")
+
+    finally:
+        print("Operation cancelled by user.")
+        print("Closing COM port...")
+        config.serCfg.close()
+        print("Exiting...")
+        sys.exit(1)
