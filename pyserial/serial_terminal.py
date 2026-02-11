@@ -58,6 +58,10 @@ def main():
             user_test_choice = input(">> ")
 
             if user_test_choice == "1":
+                print("Operation cancelled by user.")
+                print("Closing COM port...")
+                config.serCfg.close()
+                print("Exiting...")
                 isRunningSerialUsb = False
 
             elif user_test_choice == "2":
