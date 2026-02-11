@@ -55,11 +55,11 @@ def write():
 
         except KeyboardInterrupt:
             print("Operation cancelled by user.")
+            print("Closing COM port...")
+            config.serCfg.close()
+            print("Exiting...")
             is_writing = False
-            #print("Closing COM port...")
-            #config.serCfg.close()
-            #print("Exiting...")
-            #sys.exit(1)
+            sys.exit(1)
         
 # read function to read serial input
 def read():
@@ -80,12 +80,12 @@ def read():
 
         except KeyboardInterrupt:
             print ("\nStopped by user")
-            is_writing = False
             return
 
         finally:
             print("Operation cancelled by user.")
-            #print("Closing COM port...")
-            #config.serCfg.close()
-            #print("Exiting...")
-            #sys.exit(1)
+            print("Closing COM port...")
+            config.serCfg.close()
+            print("Exiting...")
+            is_writing = False
+            sys.exit(1)
