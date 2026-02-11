@@ -89,3 +89,50 @@ def read():
             print("Exiting...")
             is_writing = False
             sys.exit(1)
+
+# dual read function to read serial input
+def multiport():
+
+    print("\nWhich COMPORT is the second controller connected to?")
+    comport_user_input = input(">> COM")
+
+    print("\nWhat baud rate is the second controller set at?")
+    baudrate_user_input = input()
+
+    print("\nWhat timeout will the second controller use [s]?")
+    timeout_user_input = int(input())
+
+    #config.initSerial(comport_user_input,baudrate_user_input,timeout_user_input)
+    #config.serCfg.open()
+
+    ser2 = serial.Serial(comport_user_input,baudrate_user_input,timeout_user_input)
+    ser2.open()
+
+    print("\nReading from serial port...")
+    try:
+        while True:
+            if config.serCfg.in_waiting > 0:
+            
+                # read response from first comport, prints ascii and hex
+                response1 = config.serCfg.readline()
+                hex_response1 = response1.hex()
+                print(f"\nReceived Val: {response1}")      # ascii
+                print(f"Received Hex: {hex_response1}")     # hex
+                
+                # read response from second comport, prints ascii and hex
+                response2 = ser2.readline()
+                hex_response2 = response2.hex()
+                print(f"\nReceived Val: {response2}")      # ascii
+                print(f"Received Hex: {hex_response2}")     # hex
+
+    except KeyboardInterrupt:
+        print ("\nStopped by user")
+        return
+    
+    finally:
+        print("Operation cancelled by user.")
+        print("Closing COM port...")
+        config.serCfg.close()
+        print("Exiting...")
+        is_writing = False
+        sys.exit(1)

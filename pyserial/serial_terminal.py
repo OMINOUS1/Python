@@ -53,7 +53,7 @@ def main():
             print("\n\n-------------------------")
             print("|\tMain Menu\t|")
             print("-------------------------")
-            print("1. Exit\n2. Read\n3. Write")
+            print("1. Exit\n2. Read\n3. Write\n4. Multiport")
 
             user_test_choice = input(">> ")
 
@@ -70,6 +70,10 @@ def main():
             elif user_test_choice == "3":
                 while True:
                     functions.write()
+            
+            elif user_test_choice == "4":
+                while True:
+                    functions.multiport()
 
             else:
                 print("Unknown choice.")
