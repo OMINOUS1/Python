@@ -52,7 +52,8 @@ def write():
         #config.serCfg.close()
         #print("Exiting...")
         #sys.exit(1)
-        return
+        
+    return
 
 # read function to read serial input
 def read():
