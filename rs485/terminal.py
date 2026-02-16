@@ -46,29 +46,8 @@ def main():
     if config.serCfg.is_open:
         while isRunningSerialUsb:
             try:
-                # get hex input from user
-                #user_input = input("\n>>Enter a hex command (e.g, 0x1A or 1A): ").strip()
-
                 # modbus request
                 cmd = bytes.fromhex("01 03 00 00 00 06 C5 C8")
-
-                # remove '0x' if present
-                #if user_input.lower().startswith("0x"):
-                #    user_input = user_input[2:]
-
-                # adding bounds
-                #if not all(c in "0123456789abcdefABCDEF" for c in user_input):
-                #    print("Invalid hex value. only 0-9 and A-F are allowed.")
-                #    config.serCfg.close()
-                #    sys.exit(1)
-
-                # convert hex string bytes
-                #hex_value = bytes.fromhex(user_input)
-                #config.serCfg.write(hex_value)
-                #print(f"Sent: {user_input}")
-
-                # wait for device to respond
-                #time.sleep(0.1)
 
                 config.serCfg.write(cmd)
                 print(f"\nSent: {cmd}")
@@ -86,7 +65,7 @@ def main():
                 int_pwr = int(hex_response_pwr.strip(), 16)         # hex to decimal conversion of power in watts
                 if response:
                     #print(f"Received Val: {response}")      # ascii
-                    print(f"Received Hex: {hex_response}")  # hex
+                    #print(f"Received Hex: {hex_response}")  # hex
                     #print(f"Received Index: {hex_response_index}")
                     print(f"Received Torque [Nm]: {int_torque_nm}")
                     print(f"Received Torque [Ft*Lbs]: {int_torque_ftlbs:.2f}")
@@ -95,13 +74,13 @@ def main():
                 else:
                     print("No response received")
                 
-                #time.sleep(0.1)   # one second delay before sending command again
+                time.sleep(1)   # one second delay before sending command again
 
             except KeyboardInterrupt:
-                print("Operation cancelled by user.")
+                print("\nOperation cancelled by user.")
                 print("Closing COM port...")
                 config.serCfg.close()
-                print("Exiting...")
+                print("Exiting...\n\n")
                 is_writing = False
                 sys.exit(1)
 
