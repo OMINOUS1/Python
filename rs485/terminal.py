@@ -62,23 +62,32 @@ def main():
                 config.serCfg.write(cmd)
                 print(f"\nSent: {cmd}")
 
-                # read response prints ascii and hex
-                response = config.serCfg.readline()
-                hex_response = response.hex()
+                time.sleep(1)
 
-                hex_response_index = hex_response[0:6]              # first 4 bytes of modbus response
+                # read response prints ascii and hex
+                #response = config.serCfg.readline() # reads untill new line \n
+                #response = config.serCfg.readlines() # reads whole buffer
+                response = config.serCfg.read(config.serCfg.in_waiting)# or 1) # reads whole buffer
+                hex_response = response.hex()
+                # print for debugging error of invalide literal on response (non hex value)
+                print(f"Received Val: {response}")      # ascii
+                print(f"Received Hex: {hex_response}")  # hex
+
+                hex_response_index = hex_response[1:6]              # first 4 bytes of modbus response
+                #hex_response_torque = hex_response[7:14]            # bytes 7-14 for torque response
+                #hex_response_rpm = hex_response[15:22]              # bytes 15-22 for angular velocity response 
+                #hex_response_pwr = hex_response[23:30]              # bytes 23-30 for power response
                 hex_response_torque = hex_response[6:14]            # bytes 7-14 for torque response
                 hex_response_rpm = hex_response[14:22]              # bytes 15-22 for angular velocity response 
                 hex_response_pwr = hex_response[22:30]              # bytes 23-30 for power response
+
                 int_torque_nm = int(hex_response_torque.strip(), 16)#/100   # hex to decimal conversion of torque in Nm
 
                 bits = 32   #bit value of each element
-                
+
                 #if sign bit is set, 2s compliment and absolute value
                 if int_torque_nm & (1 << (bits - 1)):                 # 2s compliment
-                    # mask to ensure value fits in the given bit width
-                    mask = (1 << bits) -1
-                    int_torque_nm = (~int_torque_nm +1) & mask
+                    int_torque_nm -= (1 << bits)
                 
                 int_torque_nm = int_torque_nm/100
 
@@ -121,7 +130,7 @@ def main():
                     #print(f"Received Val: {response}")      # ascii
                     #print(f"Received Hex: {hex_response}")  # hex
                     #print(f"Received Index: {hex_response_index}")
-                    #print(f"Received Torque [Nm]: {int_torque_nm}")
+                    print(f"Received Torque [Nm]: {int_torque_nm}")
                     print(f"Received Torque [lb*ft]: {int_trq_ftlbs}")
                     print(f"Received Angular Velocity [RPM]: {int_rpm}")
                     print(f"Received Power [W]: {int_pwr}")
@@ -131,7 +140,7 @@ def main():
                 else:
                     print("No response received")
                 
-                #time.sleep(1)   # one second delay before sending command again
+                time.sleep(1)   # one second delay before sending command again
 
             except KeyboardInterrupt:
                 print("\nOperation cancelled by user.")
