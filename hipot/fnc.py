@@ -54,7 +54,7 @@ def run():
     config.serCfg.write(rslt_cmd)
     rslt_response = config.serCfg.readline()
     str_rslt = rslt_response.decode('ascii')
-    rslt = read_rslt_flag(f'Test Results: {str_rslt}')
+    rslt = read_rslt_flag(str_rslt)
     print(f'Test Result: {rslt}')
 
     # test sequence 1 inquery
