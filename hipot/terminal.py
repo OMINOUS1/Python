@@ -1,7 +1,7 @@
 """
 terminal.py
 
-    Python script to run Woodway USA, Inc. Hipot Test
+    Python script to run Woodway USA, Inc. Hipot Vitrek V74 Test
 
     Test Sequence:
 

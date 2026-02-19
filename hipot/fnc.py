@@ -16,7 +16,6 @@ import config
 #~~~~~ Functions ~~~~~
 def run():
 
-    print("\nShould we request the technicians name and date?")
     print("\nEnter Serial Number of DUT")
     serial_number = input(">>Serial Number: ")
 
@@ -48,27 +47,27 @@ def run():
     config.serCfg.write(stat_cmd)
     stat_response = config.serCfg.readline()
     str_stat = stat_response.decode('ascii')
-    stat = read_stat_flag(f'Test Status: {str_stat}')
-    print(stat)
+    stat = read_stat_flag(str_stat)
+    print(f'Test Status: {stat}')
 
     # results inquery
     config.serCfg.write(rslt_cmd)
     rslt_response = config.serCfg.readline()
     str_rslt = rslt_response.decode('ascii')
     rslt = read_rslt_flag(f'Test Results: {str_rslt}')
-    print(rslt)
+    print(f'Test Result: {rslt}')
 
     # test sequence 1 inquery
     config.serCfg.write(stprslt1_cmd)
     stp_rslt1 = config.serCfg.readline()
     str_stp_rslt1 = stp_rslt1.decode('ascii').replace('\n', '').replace('\r', '')
-    print(str_stp_rslt1)
+    print(f'Ground Bond (GB) Test Results: {str_stp_rslt1}')
 
     # test sequence 2 inquery
     config.serCfg.write(stprslt2_cmd)
     stp_rslt2 = config.serCfg.readline()
     str_stp_rslt2 = stp_rslt2.decode('ascii').replace('\n', '').replace('\r', '')
-    print(str_stp_rslt2)
+    print(f'AC Voltage Withstand (ACW) Test Results: {str_stp_rslt2}')
 
 def read_stat_flag(val):
     stat_flag = 'DEADBEEF'
