@@ -69,14 +69,12 @@ def main():
                 #response = config.serCfg.readlines() # reads whole buffer
                 response = config.serCfg.read(config.serCfg.in_waiting)# or 1) # reads whole buffer
                 hex_response = response.hex()
+
                 # print for debugging error of invalide literal on response (non hex value)
-                print(f"Received Val: {response}")      # ascii
+                #print(f"Received Val: {response}")      # ascii
                 print(f"Received Hex: {hex_response}")  # hex
 
                 hex_response_index = hex_response[1:6]              # first 4 bytes of modbus response
-                #hex_response_torque = hex_response[7:14]            # bytes 7-14 for torque response
-                #hex_response_rpm = hex_response[15:22]              # bytes 15-22 for angular velocity response 
-                #hex_response_pwr = hex_response[23:30]              # bytes 23-30 for power response
                 hex_response_torque = hex_response[6:14]            # bytes 7-14 for torque response
                 hex_response_rpm = hex_response[14:22]              # bytes 15-22 for angular velocity response 
                 hex_response_pwr = hex_response[22:30]              # bytes 23-30 for power response

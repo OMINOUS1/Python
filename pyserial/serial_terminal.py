@@ -53,7 +53,7 @@ def main():
             print("\n\n-------------------------")
             print("|\tMain Menu\t|")
             print("-------------------------")
-            print("1. Exit\n2. Read\n3. Write\n4. Multiport")
+            print("1. Exit\n2. Read\n3. Write\n4. Multiport\n5. Control Commands\n6. Status Query")
 
             user_test_choice = input(">> ")
 
@@ -74,6 +74,14 @@ def main():
             elif user_test_choice == "4":
                 while True:
                     functions.multiport()
+            
+            elif user_test_choice == "5":
+                while True:
+                    functions.ctrl_cmd()
+            
+            elif user_test_choice == "6":
+                while True:
+                    functions.status_qry()
 
             else:
                 print("Unknown choice.")

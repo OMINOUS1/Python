@@ -13,6 +13,7 @@ import serial
 import sys
 import time
 import config  # custom file for the serial configs to share global serial object.
+import commands
 
 is_writing = False
 is_reading = False
@@ -136,4 +137,66 @@ def multiport():
         print("Exiting...")
         is_writing = False
         sys.exit(1)
+
+# control commands
+def ctrl_cmd():
+
+    isRunningCtrl = True
+
+    while isRunningCtrl:
+        # Here you can optionally decide full test or cherry picked tests w/ custom payloads.
+        print("\n\n-----------------------------------------")
+        print("|\tControl Commands Main Menu\t|")
+        print("-----------------------------------------")
+        print("1. Exit\n" \
+        "2. Start Belt with WatchDog\n" \
+        "3. Start Belt\n" \
+        "4. Disengage Belt\n" \
+        "5. Belt Speed\n" \
+        "6. Belt Elevation\n" \
+        "7. Engage Belt\n" \
+        "8. Auto Stop")
+
+        user_test_choice = input(">> ")
+
+        if user_test_choice == "1":
+            print("Operation cancelled by user.")
+            print("Exiting...")
+            isRunningCtrl = False
+
+        elif user_test_choice == "2":
+            commands.ctrl_start_belt_wd()
         
+        elif user_test_choice == "3":
+            commands.ctrl_start_belt()
+        
+        elif user_test_choice == "4":
+            commands.ctrl_disengage_belt()
+        
+        elif user_test_choice == "5":
+            commands.ctrl_belt_speed()
+        
+        elif user_test_choice == "6":
+            commands.ctrl_belt_elevation()
+        
+        elif user_test_choice == "7":
+            commands.ctrl_belt_engage()
+        
+        elif user_test_choice == "8":
+            commands.ctrl_belt_stop()
+
+        else:
+            print("Unknown choice.")
+
+        #commands.ctrl_start_belt_wd()
+
+# status query
+def status_qry():
+    while True:
+        # Here you can optionally decide full test or cherry picked tests w/ custom payloads.
+        print("\n\n-------------------------")
+        print("|\tStatus Query Main Menu\t|")
+        print("-------------------------")
+        print("1. Exit\n2. Read\n3. Write\n4. Multiport\n5. Control Commands\n6. Status Query")
+
+        #commands.query()
