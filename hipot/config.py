@@ -36,4 +36,4 @@ def initSerial(COMPORT,BAUD_RATE,TO):
     serCfg.startbits = 1
     serCfg.rtscts = 1
 
-    print(serCfg)
+    #print(serCfg)

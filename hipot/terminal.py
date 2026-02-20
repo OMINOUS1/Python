@@ -80,14 +80,19 @@ def main():
     for i, p in enumerate(ports):
         print(f"{i}: {p}")
 
-    print("\nWhich COMPORT is the Hipot connected to?")
-    comport_user_input = input(">> COM")
+    # user input for serial connection
+    #print("\nWhich COMPORT is the Hipot connected to?")
+    comport_user_input = '7' #input(">> COM")
 
-    print("\nWhat baud rate is the Hipot set at? (Default - 115200)")
-    baudrate_user_input = input()
+    # user input for serial baud rate
+    #print("\nWhat baud rate is the Hipot set at? (Default - 115200)")
+    baudrate_user_input = 115200 #input()
 
-    print("\nWhat timeout will the controller use [s]? (Default 1)")
-    timeout_user_input = int(input())
+    # user input for serial timeout
+    #print("\nWhat timeout will the controller use [s]? (Default 1)")
+    timeout_user_input = 1 #int(input())
+
+    print(f'Connecting to COM{comport_user_input}')
 
     config.initSerial(comport_user_input,baudrate_user_input,timeout_user_input)
 
@@ -101,7 +106,7 @@ def main():
             print("\n\n-------------------------")
             print("|\tMain Menu\t|")
             print("-------------------------")
-            print("1. Exit\n2. Run Hipot GB and ACW Test\n")
+            print("1. Exit\n2. Hipot Test\n")
 
             user_test_choice = input(">> ")
 
